@@ -2,7 +2,7 @@ package br.com.fj21.model;
 
 import java.util.Calendar;
 
-public class Contato {
+public class ContatoModel {
 	
 	private Long id;
 	private String nome;

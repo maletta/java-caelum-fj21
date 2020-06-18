@@ -3,7 +3,7 @@ package br.com.fj21.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
-import br.com.fj21.model.Contato;
+import br.com.fj21.model.ContatoModel;
 import java.util.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,7 +15,7 @@ import java.util.List;
 
 public class ContatoDAO {
 
-	public void inserirContato(Contato contato) {
+	public void adiciona(ContatoModel contato) {
 		Connection con = new ConnectionFactory().getConnection();
 		String sql = "Insert into contatos (nome,email,endereco,dataNascimento) values (?,?,?,?)";
 
@@ -39,13 +39,13 @@ public class ContatoDAO {
 	public ArrayList getLista() {
 		Connection con = new ConnectionFactory().getConnection();
 		String consultaSQL = "Select * from contatos";
-		ArrayList<Contato> lista = null;
+		ArrayList<ContatoModel> lista = null;
 		try {
 			PreparedStatement stm = con.prepareStatement(consultaSQL);
 			ResultSet resultado = stm.executeQuery();
 			lista = new ArrayList();
 			while (resultado.next()) {
-				Contato contato = new Contato();
+				ContatoModel contato = new ContatoModel();
 				contato.setId(resultado.getLong("id"));
 				contato.setNome(resultado.getString("nome"));
 				contato.setEmail(resultado.getString("email"));
@@ -72,10 +72,11 @@ public class ContatoDAO {
 		} catch (SQLException e) {
 			System.out.println("Erro ao retornar uma lista de objetos do banco no ContatoDAO");
 		}
+		System.out.println("lista retornada");
 		return lista;
 	}
 
-	public void altera(Contato contato) {
+	public void altera(ContatoModel contato) {
 		Connection con = new ConnectionFactory().getConnection();
 		
 		String sql = "update contatos set nome=?, email=?, endereco=?," + "dataNascimento=? where id=?";
@@ -93,7 +94,7 @@ public class ContatoDAO {
 		}
 	}
 	
-	public void remove(Contato contato) {
+	public void remove(ContatoModel contato) {
 		Connection con = new ConnectionFactory().getConnection();
 	    try {
 	        PreparedStatement stmt = con.prepareStatement("delete " +

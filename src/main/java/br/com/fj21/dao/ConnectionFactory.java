@@ -12,17 +12,17 @@ public class ConnectionFactory {
 		try {
 			
 			//carrega a classe 
-			ServiceLoader.load(org.postgresql.Driver.class);
+			//ServiceLoader.load(org.postgresql.Driver.class);
 
-			// Class.forName("org.postgresql.Driver");
+			Class.forName("org.postgresql.Driver");
 			String settings = "jdbc:postgresql://localhost:5432/fj21";
 			String user = "postgres";
 			String password = "postgres";
 
 			connection = DriverManager.getConnection(settings, user, password);
-		} catch (SQLException e) {
+		} catch (ClassNotFoundException | SQLException e) {
 			 e.printStackTrace();
-			 //relan�ando a exce��o para n�o ficarmos acoplados a API JDBC
+			 //relançando a exceção para não ficarmos acoplados a API JDBC
 			 throw new RuntimeException(e);
 		}
 
