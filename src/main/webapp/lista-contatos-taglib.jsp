@@ -19,7 +19,7 @@
 	<c:forEach var="contato" items="${contatoDAO.lista}">
 
 		${contato.nome}, ${contato.email},
-        ${contato.endereco}, ${contato.dataNascimento} 
+        ${contato.endereco}, ${contato.dataNascimento.time} 
 	</c:forEach>
 
 	</br>
@@ -32,24 +32,33 @@
 				<th>Contador</th>
 				<th>Nome</th>
 				<th>Email</th>
+				<th>Data Nascimento</th>
 			</tr>
 		</thead>
 		<!-- percorre contatos montando as linhas da tabela -->
 		<tbody>
 			<c:forEach var="contato" items="${contatoDAO.lista}" varStatus="id">
 				<tr bgcolor="#${id.count % 2 == 0 ? 'aaee88' : 'ffffff' }">
-					<td>${id.count}</td>
-					<td>${contato.nome}</td>
 					<td>
-						<c:choose>
-						<c:when test="${not empty contato.email }">
-							<a href="mailto:${contato.email }">${contato.email }</a>
-						</c:when>
-						<c:otherwise>
+					
+					<c:if test="${ id.count < 2}">
+					<span style="color:red;">${id.count}</span>
+					</c:if> 
+					<c:if test="${ ! (id.count < 2) }">
+						<span style="color:blue;">${id.count}</span>
+					</c:if>
+					
+					</td>
+					<td>${contato.nome}</td>
+					<td><c:choose>
+							<c:when test="${not empty contato.email }">
+								<a href="mailto:${contato.email }">${contato.email }</a>
+							</c:when>
+							<c:otherwise>
 							E-mail não informado
 						</c:otherwise>
-					</c:choose>
-					</td>
+						</c:choose></td>
+					<td>${contato.dataNascimento.time}</td>
 				</tr>
 			</c:forEach>
 		</tbody>
