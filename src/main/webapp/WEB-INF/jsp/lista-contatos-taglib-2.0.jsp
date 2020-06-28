@@ -11,14 +11,9 @@
 </head>
 <body>
 
-	<!-- cria o DAO -->
-	<jsp:useBean id="contatoDAO" class="br.com.fj21.dao.ContatoDAO" />
-	<%
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-	%>
-
+	<!-- objeto lista vem do servlet através do setAttribute -->
 	<!-- Cria a var contato para cada item da lista -->
-	<c:forEach var="contato" items="${contatoDAO.lista}">
+	<c:forEach var="contato" items="${lista}">
 		${contato.nome}, ${contato.email},
         ${contato.endereco}, ${contato.dataNascimento.time} 
 	</c:forEach>
@@ -36,19 +31,20 @@
 				<th>Email</th>
 				<th>Data Nascimento</th>
 				<th>Data Formatada</th>
-				<th></th>
 			</tr>
 		</thead>
 		<!-- percorre contatos montando as linhas da tabela -->
+		
+		<strong><h3>Lista enviada por setAttribute</h3></strong>
 		<tbody>
-			<c:forEach var="contato" items="${contatoDAO.lista}" varStatus="id">
+			<c:forEach var="contato" items="${lista}" varStatus="id">
 				<tr bgcolor="#${id.count % 2 == 0 ? 'aaee88' : 'ffffff' }">
 					<td><c:if test="${ id.count < 2}">
 							<span style="color: red;">${id.count}</span>
 						</c:if> <c:if test="${ ! (id.count < 2) }">
 							<span style="color: blue;">${id.count}</span>
 						</c:if></td>
-					<td>${contato.id}</td>
+						<td>${contato.id}</td>
 					<td>${contato.nome}</td>
 					<td><c:choose>
 							<c:when test="${not empty contato.email }">
@@ -61,7 +57,6 @@
 					<td>${contato.dataNascimento.time}</td>
 					<td><fmt:formatDate value="${contato.dataNascimento.time }"
 							pattern="dd/MM/yyyy" /></td>
-					<td><a href="sistema?id=${contato.id}&logica=RemoveContatoLogica">remover</a></td>
 				</tr>
 			</c:forEach>
 		</tbody>

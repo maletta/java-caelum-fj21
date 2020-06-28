@@ -2,7 +2,8 @@
 <header class="mb-2">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="#">
-        <!-- c:url utilizado para refernciar um caminho relativo ao endereço acessado  -->
+        <!-- c:url utilizado para referenciar o caminho absoluto do projeto ao endereço acessado  -->
+        <!-- exemplo: fj21/imagens/postgres.png -->
             <img src="<c:url value="/imagens/postgres.png"/>" width="75" height="50" alt="">
         </a>
         <div class="collapse navbar-collapse" id="navbarNavDropdown">

@@ -1,13 +1,14 @@
 package br.com.fj21.controller;
 
+
+
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-import javax.servlet.ServletConfig;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,29 +18,13 @@ import javax.servlet.http.HttpServletResponse;
 import br.com.fj21.dao.ContatoDAO;
 import br.com.fj21.model.ContatoModel;
 
-//name = nome da servlet
-//urlPatterns = mapeamento de umas ou mais urls disponíveis para acesso
-//value = mapeamento único url disponível para acesso
-@WebServlet(name = "contato", urlPatterns = {"/contato", "/contact" })
-public class ContatoController extends HttpServlet {
+@WebServlet(urlPatterns= {"/adicionar"})
+public class AdicionaContatoServlet extends HttpServlet implements Logica{
 
-	public void init(ServletConfig config) throws ServletException {
-        super.init(config);
-        log("Iniciando a servlet");
-        System.out.println("Iniciando contato servlet");
-    }
-
-    public void destroy() {
-        super.destroy();
-        log("Destruindo a servlet");
-        System.out.println("Destruindo contato servlet");
-    }
-	
 	@Override
-	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		System.out.println("Servlet contato");
-		PrintWriter out = resp.getWriter();
-
+	public String executa(HttpServletRequest req, HttpServletResponse resp) {
+		
+		// http://localhost:8080/fj21/mvc?logica=PrimeiraLogica
 		String nome = req.getParameter("nome");
 		String endereco = req.getParameter("endereco");
 		String email = req.getParameter("email");
@@ -53,9 +38,9 @@ public class ContatoController extends HttpServlet {
 			dataNascimento = Calendar.getInstance();
 			dataNascimento.setTime(date);
 		} catch (ParseException e) {
-			System.out.println("Deu ruim");
+			System.out.println("Não Adicionou contato");
 			e.printStackTrace();
-			return; // para a execução do método
+			return "lista-contatos-taglib.jsp"; // para a execução do método
 		}
 
 		// monta objeto contato
@@ -68,11 +53,10 @@ public class ContatoController extends HttpServlet {
 		// salva contato
 		ContatoDAO dao = new ContatoDAO();
 		dao.adiciona(contato);
-
-		// imprime o nome do contato que foi adicionado
-		//System.out.println(dataEmTexto);
-		//System.out.println(dataNascimento);
-		out.print("adicionado com sucesso");
+		
+		System.out.println("Adicionou contato");
+		
+		return "lista-contatos-taglib.jsp";
 	}
-
+	
 }

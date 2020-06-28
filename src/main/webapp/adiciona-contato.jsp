@@ -1,6 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib  uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@taglib tagdir="/WEB-INF/tags" prefix="tagCriada" %>
+<%@taglib tagdir="/WEB-INF/tags" prefix="minhasTags" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -13,10 +13,10 @@
 
         <div class="container">
 
-            <form action="servlet">
+            <form action="sistema" method="get">
                 <div class="form-row">
                     <div class="form-group col-md-6">
-                        <label for="nome">Email</label>
+                        <label for="nome">Nome</label>
                         <input type="text" class="form-control" id="nome" placeholder="nome">
                     </div>
                     <div class="form-group col-md-6">
@@ -26,16 +26,16 @@
                 </div>
                  <div class="form-row">
                     <div class="form-group col-md-6">
-                        <label for="endereco">Email</label>
+                        <label for="endereco">Endereço</label>
                         <input type="text" class="form-control" id="endereco" placeholder="endereco">
                     </div>
                     <div class="form-group col-md-6">
-                        <label for="dataNascimento">Password</label>
+                        <label for="dataNascimento">Data Nascimento</label>
                         <input type="date" class="form-control" id="dataNascimento" placeholder="11/01/2000">
                     </div>
                 </div>
                 <div class="form-row">
-                    <tagCriada:tagCriada id="enviar" value="Enviar"/>
+                    <minhasTags:tagCriada id="enviar" value="Enviar"/>
                 </div>
             </form>
 
