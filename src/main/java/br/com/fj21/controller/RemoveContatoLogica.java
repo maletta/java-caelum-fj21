@@ -1,6 +1,7 @@
 package br.com.fj21.controller;
 
 import java.io.IOException;
+import java.sql.Connection;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -8,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 
 import br.com.fj21.dao.ContatoDAO;
 import br.com.fj21.model.ContatoModel;
@@ -21,8 +23,13 @@ public class RemoveContatoLogica extends HttpServlet implements Logica {
 		long id = Long.parseLong(req.getParameter("id"));
 		ContatoModel contato = new ContatoModel();
 		contato.setId(id);
-		ContatoDAO dao = new ContatoDAO();
+		
+		// recuperar conexao criada no filtro
+		ContatoDAO dao = new ContatoDAO((Connection) req.getAttribute("conexao"));
+		
 		dao.remove(contato);
+		
+		req.setAttribute("lista", dao.getLista());
 
 		System.out.println("Removeu contato");
 

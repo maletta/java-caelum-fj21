@@ -15,12 +15,21 @@ import java.util.List;
 
 public class ContatoDAO {
 
+	
+	private Connection connection;
+	
+	// connection será injetada neste objeto
+	// inversão de controle, esta classe não controla mais a instanciação das conexões
+	public ContatoDAO(Connection connection) {
+		this.connection = connection;
+	}
+	
 	public void adiciona(ContatoModel contato) {
-		Connection con = new ConnectionFactory().getConnection();
+		
 		String sql = "Insert into contatos (nome,email,endereco,dataNascimento) values (?,?,?,?)";
 
 		try {
-			PreparedStatement stm = con.prepareStatement(sql);
+			PreparedStatement stm = this.connection.prepareStatement(sql);
 			stm.setString(1, contato.getNome());
 			stm.setString(2, contato.getEmail());
 			stm.setString(3, contato.getEndereco());
@@ -29,7 +38,7 @@ public class ContatoDAO {
 			// executa
 			stm.execute();
 			stm.close();
-			con.close();
+			this.connection.close();
 			System.out.println("Salvou");
 		} catch (Exception e) {
 			System.out.println("Não Salvou");
@@ -37,11 +46,10 @@ public class ContatoDAO {
 	}
 
 	public ArrayList getLista() {
-		Connection con = new ConnectionFactory().getConnection();
 		String consultaSQL = "Select * from contatos";
 		ArrayList<ContatoModel> lista = null;
 		try {
-			PreparedStatement stm = con.prepareStatement(consultaSQL);
+			PreparedStatement stm = this.connection.prepareStatement(consultaSQL);
 			ResultSet resultado = stm.executeQuery();
 			lista = new ArrayList();
 			while (resultado.next()) {
@@ -77,11 +85,10 @@ public class ContatoDAO {
 	}
 
 	public void altera(ContatoModel contato) {
-		Connection con = new ConnectionFactory().getConnection();
 		
 		String sql = "update contatos set nome=?, email=?, endereco=?," + "dataNascimento=? where id=?";
 		try {
-			PreparedStatement stmt = con.prepareStatement(sql);
+			PreparedStatement stmt = this.connection.prepareStatement(sql);
 			stmt.setString(1, contato.getNome());
 			stmt.setString(2, contato.getEmail());
 			stmt.setString(3, contato.getEndereco());
@@ -95,9 +102,8 @@ public class ContatoDAO {
 	}
 	
 	public void remove(ContatoModel contato) {
-		Connection con = new ConnectionFactory().getConnection();
 	    try {
-	        PreparedStatement stmt = con.prepareStatement("delete " +
+	        PreparedStatement stmt = this.connection.prepareStatement("delete " +
 	                "from contatos where id=?");
 	        stmt.setLong(1, contato.getId());
 	        stmt.execute();

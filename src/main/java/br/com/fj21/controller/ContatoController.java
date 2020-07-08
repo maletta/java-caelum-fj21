@@ -6,6 +6,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.sql.Connection;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import br.com.fj21.dao.ContatoDAO;
 import br.com.fj21.model.ContatoModel;
+
 
 //name = nome da servlet
 //urlPatterns = mapeamento de umas ou mais urls disponíveis para acesso
@@ -66,7 +68,8 @@ public class ContatoController extends HttpServlet {
 		contato.setDataNascimento(dataNascimento);
 
 		// salva contato
-		ContatoDAO dao = new ContatoDAO();
+		// recuperar conexao criada no filtro
+		ContatoDAO dao = new ContatoDAO((Connection) req.getAttribute("conexao"));
 		dao.adiciona(contato);
 
 		// imprime o nome do contato que foi adicionado

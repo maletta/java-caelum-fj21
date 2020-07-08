@@ -14,6 +14,7 @@ public class SistemaTodoServlet extends HttpServlet {
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
 		String nomeDaClasse = "br.com.fj21.controller."+ req.getParameter("logica");
+		
 
 		try {
 			Class<?> classe = Class.forName(nomeDaClasse);

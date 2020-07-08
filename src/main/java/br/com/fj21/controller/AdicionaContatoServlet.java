@@ -7,6 +7,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.sql.Connection;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -51,7 +52,8 @@ public class AdicionaContatoServlet extends HttpServlet implements Logica{
 		contato.setDataNascimento(dataNascimento);
 
 		// salva contato
-		ContatoDAO dao = new ContatoDAO();
+		// recuperando conexao criada no filtro
+		ContatoDAO dao = new ContatoDAO((Connection) req.getAttribute("conexao"));
 		dao.adiciona(contato);
 		
 		System.out.println("Adicionou contato");

@@ -12,13 +12,18 @@
 <body>
 
 	<!-- cria o DAO -->
-	<jsp:useBean id="contatoDAO" class="br.com.fj21.dao.ContatoDAO" />
+	<!--
+	
+	Instancia classes 
+	 <% // <jsp:useBean id="contatoDAO" class="br.com.fj21.dao.ContatoDAO" /> %>
+	
+	-->
 	<%
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 	%>
 
 	<!-- Cria a var contato para cada item da lista -->
-	<c:forEach var="contato" items="${contatoDAO.lista}">
+	<c:forEach var="contato" items="${lista}">
 		${contato.nome}, ${contato.email},
         ${contato.endereco}, ${contato.dataNascimento.time} 
 	</c:forEach>
@@ -41,7 +46,7 @@
 		</thead>
 		<!-- percorre contatos montando as linhas da tabela -->
 		<tbody>
-			<c:forEach var="contato" items="${contatoDAO.lista}" varStatus="id">
+			<c:forEach var="contato" items="${lista}" varStatus="id">
 				<tr bgcolor="#${id.count % 2 == 0 ? 'aaee88' : 'ffffff' }">
 					<td><c:if test="${ id.count < 2}">
 							<span style="color: red;">${id.count}</span>
